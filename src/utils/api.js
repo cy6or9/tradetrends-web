@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const FINNHUB_API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
+export const getFinnhubApiKey = () => import.meta.env.VITE_FINNHUB_API_KEY;
 
 export const getStockData = async () => {
   try {
