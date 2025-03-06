@@ -4,11 +4,9 @@ export async function handler(event) {
     }
 
     const secretHeader = event.headers["x-finnhub-secret"] || event.headers["X-Finnhub-Secret"];
-    const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
     const expectedSecret = process.env.EXPECTED_WEBHOOK_SECRET; // Set this in your environment variables
 
     console.log("Received secret header:", secretHeader); // Debugging log
-    console.log("FINNHUB_API_KEY:", FINNHUB_API_KEY); // Debugging log
     console.log("EXPECTED_WEBHOOK_SECRET:", expectedSecret); // Debugging log
 
     // Validate the Webhook secret
@@ -17,16 +15,19 @@ export async function handler(event) {
         return { statusCode: 401, body: "Unauthorized" };
     }
 
+    // Acknowledge receipt of the event immediately with a 200 response
+    // Finnhub needs this early 2xx status to prevent timeouts and retries
+    console.log("Webhook received and acknowledged successfully.");
+    // Do not perform heavy processing here (like parsing the body or querying services)
+
+    // Process the event asynchronously after acknowledgment
     try {
-        console.log("Received event body:", event.body); // Debugging log
-        let payload = event.body;
-        if (typeof payload === 'string') {
-            payload = JSON.parse(payload);
-        }
+        const payload = JSON.parse(event.body);
         console.log("Received Webhook Event:", payload);
 
-        // TODO: Process the received stock data and update Firestore or cache
+        // TODO: Process the received stock data and update Firestore or cache asynchronously
 
+        // Return success after acknowledging
         return { statusCode: 200, body: "Webhook received successfully" };
     } catch (error) {
         console.error("Error processing Webhook:", error.message, error.stack); // Improved error logging
