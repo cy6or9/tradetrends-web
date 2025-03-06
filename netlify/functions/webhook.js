@@ -3,12 +3,15 @@ export async function handler(event) {
         return { statusCode: 405, body: "Method Not Allowed" };
     }
 
-    const secretHeader = event.headers["x-finnhub-secret"];
+    const secretHeader = event.headers["x-finnhub-secret"] || event.headers["X-Finnhub-Secret"];
     const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
     const expectedSecret = process.env.EXPECTED_WEBHOOK_SECRET; // Set this in your environment variables
     
+    console.log("Received secret header:", secretHeader); // Debugging log
+
     // Validate the Webhook secret
     if (secretHeader !== expectedSecret) {
+        console.log("Secret mismatch: received", secretHeader, "expected", expectedSecret); // Debugging log
         return { statusCode: 401, body: "Unauthorized" };
     }
 
