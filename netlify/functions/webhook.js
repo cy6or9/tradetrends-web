@@ -5,6 +5,7 @@ export async function handler(event) {
 
     const secretHeader = event.headers["x-finnhub-secret"];
     const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
+    const expectedSecret = process.env.EXPECTED_WEBHOOK_SECRET; // Set this in your environment variables
     
     // Validate the Webhook secret
     if (secretHeader !== expectedSecret) {
