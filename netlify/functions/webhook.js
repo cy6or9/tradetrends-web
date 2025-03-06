@@ -2,7 +2,7 @@ export async function handler(event) {
     if (event.httpMethod !== "POST") {
         return { statusCode: 405, body: "Method Not Allowed" };
     }
-
+    const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
     const secretHeader = event.headers["x-finnhub-secret"] || event.headers["X-Finnhub-Secret"];
     const expectedSecret = process.env.EXPECTED_WEBHOOK_SECRET; // Set this in your environment variables
 
