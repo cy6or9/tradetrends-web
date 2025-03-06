@@ -4,8 +4,8 @@ export async function handler(event) {
     }
 
     const secretHeader = event.headers["x-finnhub-secret"];
-    const expectedSecret = "cuvuc2hr01qub8tvmkrgcuvuc2hr01qub8tvmks0";  // Replace with your actual secret
-
+    const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
+    
     // Validate the Webhook secret
     if (secretHeader !== expectedSecret) {
         return { statusCode: 401, body: "Unauthorized" };
