@@ -1,7 +1,9 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
-})
+  define: {
+    'process.env.VITE_FINNHUB_API_KEY': '""' // Prevents exposing API key in the build
+  }
+});
