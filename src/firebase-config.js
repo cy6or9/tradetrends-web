@@ -1,17 +1,18 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAUU-nZOb6jP1KgDAodB3c_PK7VLmFFdcc",
-  authDomain: "tradetrends-89a9d.firebaseapp.com",
-  projectId: "tradetrends-89a9d",
-  storageBucket: "tradetrends-89a9d.appspot.com",
-  messagingSenderId: "990950180616",
-  appId: "1:990950180616:web:ddadabd319d9c188a78ebd",
-  measurementId: "G-JP0GCH7QWZ"
+    apiKey: process.env.VITE_FIREBASE_API_KEY,
+    authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 const auth = getAuth(app);
 
-export { auth };
+export { db, auth };
